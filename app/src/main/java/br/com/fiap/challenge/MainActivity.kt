@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import br.com.fiap.challenge.screens.InboxScreen
 import br.com.fiap.challenge.screens.LoginScreen
 import br.com.fiap.challenge.ui.theme.ChallengeTheme
 import br.com.fiap.challenge.screens.WelcomeScreen
@@ -24,6 +25,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    InboxScreen()
 //                    val navController = rememberNavController()
 //                    NavHost(navController = navController, startDestination = "welcome") {
 //                        composable(route = "welcome") {
