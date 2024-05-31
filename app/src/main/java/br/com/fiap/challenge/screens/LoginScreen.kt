@@ -38,9 +38,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import br.com.fiap.challenge.component.Header
+import br.com.fiap.challenge.database.repository.UsuarioRepository
 
 @Composable
-fun LoginScreen(){
+fun LoginScreen(navController: NavController, usuarioRepository: UsuarioRepository){
     var email by remember {
         mutableStateOf("")
     }
@@ -156,7 +157,7 @@ fun LoginScreen(){
                                 .fillMaxWidth()
                         ){
                             Button(onClick = {
-                                //navController.navigate("cadastro")
+                                navController.navigate("cadastro")
                             },
                                 modifier = Modifier
                                     .size(width = 126.dp, height = 31.dp),
@@ -174,12 +175,13 @@ fun LoginScreen(){
                         Spacer(modifier = Modifier.height(5.dp))
                         Button(
                             onClick = {
-//                                if (usuarioRepository.validarCredenciais(email, senha)) {
-//                                    navController.navigate("home")
-//                                }else{
-//                                    borderColor = Color.Red
-//                                    errorText = "Email ou senha inválido"
-//                                }
+                                if (usuarioRepository.validarCredenciais(email, senha)) {
+                                    navController.navigate("inbox")
+                                }else{
+                                    borderColor = Color.Red
+                                    errorText = "Email ou senha inválido"
+                                }
+                                navController.navigate("inbox")
                             },
                             modifier = Modifier
                                 .align(Alignment.CenterHorizontally)
@@ -201,8 +203,8 @@ fun LoginScreen(){
     }
 }
 
-@Preview(showSystemUi = true, showBackground = true)
-@Composable
-private fun LoginScreenPreview() {
-    LoginScreen()
-}
+//@Preview(showSystemUi = true, showBackground = true)
+//@Composable
+//private fun LoginScreenPreview() {
+//    LoginScreen()
+//}

@@ -33,7 +33,7 @@ import br.com.fiap.challenge.R
 import br.com.fiap.challenge.component.Header
 
 @Composable
-fun WelcomeScreen() {
+fun WelcomeScreen(navController: NavController) {
     Box(modifier = Modifier.fillMaxWidth()) {
         Column(modifier = Modifier
             .background(color = Color(0xFFD50D3D))
@@ -73,7 +73,7 @@ fun WelcomeScreen() {
                         Spacer(modifier = Modifier.height(15.dp))
                         Button(
                             onClick = {
-                                //navController.navigate("login")
+                                navController.navigate("login")
                             },
                             modifier = Modifier
                                 .size(width = 303.dp, height = 40.dp)
@@ -102,8 +102,8 @@ fun WelcomeScreen() {
     }
 }
 
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-private fun WelcomeScreenPreview() {
-    WelcomeScreen()
-}
+//@Preview(showBackground = true, showSystemUi = true)
+//@Composable
+//private fun WelcomeScreenPreview() {
+//    WelcomeScreen()
+//}

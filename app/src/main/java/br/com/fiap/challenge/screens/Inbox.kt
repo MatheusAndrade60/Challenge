@@ -41,12 +41,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import br.com.fiap.challenge.component.Header
 import br.com.fiap.challenge.database.repository.getEmailByName
 import br.com.fiap.challenge.model.Email
 
 @Composable
-fun InboxScreen(){
+fun InboxScreen(navController: NavController){
     var stateEmail by remember {
         mutableStateOf("")
     }
@@ -183,8 +184,8 @@ fun SchoolCard(email: Email){
 //                }
 
 
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun InboxScreenView() {
-    InboxScreen()
-}
+//@Preview(showBackground = true, showSystemUi = true)
+//@Composable
+//fun InboxScreenView() {
+//    InboxScreen()
+//}
