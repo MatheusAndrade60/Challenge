@@ -1,5 +1,8 @@
 package br.com.fiap.challenge.screens
 
+import androidx.compose.animation.core.TweenSpec
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -41,52 +44,43 @@ import br.com.fiap.challenge.component.Header
 import br.com.fiap.challenge.database.repository.UsuarioRepository
 
 @Composable
-fun LoginScreen(navController: NavController, usuarioRepository: UsuarioRepository){
-    var email by remember {
-        mutableStateOf("")
-    }
-    var senha by remember {
-        mutableStateOf("")
-    }
-    var borderColor by remember {
-        mutableStateOf(Color.Gray)
-    }
-    var errorText by remember {
-        mutableStateOf("")
-    }
+fun LoginScreen(navController: NavController, usuarioRepository: UsuarioRepository) {
+    var email by remember { mutableStateOf("") }
+    var senha by remember { mutableStateOf("") }
+    var borderColor by remember { mutableStateOf(Color.Gray) }
+    var errorText by remember { mutableStateOf("") }
 
-    //Box inicial com logo e titulo
+    // Box inicial com logo e título
     Box(
-        modifier = Modifier
-            .fillMaxWidth()) {
+        modifier = Modifier.fillMaxWidth()
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
-                .background(Color.White),
+                .background(Color.White)
         ) {
-            //Medoto que ira retornar um layout para o Header
+            // Método que irá retornar um layout para o Header
             Header()
 
-            //Card com o login do usuario
+            // Card com o login do usuário
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 32.dp, vertical = 50.dp)
             ) {
-                Card(modifier = Modifier
-                    .fillMaxWidth(),
+                Card(
+                    modifier = Modifier.fillMaxWidth(),
                     colors = CardDefaults.cardColors(Color.White),
                     elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
                     shape = RoundedCornerShape(8.dp)
                 ) {
                     Column(
-                        modifier = Modifier
-                            .padding(
-                                vertical = 16.dp,
-                                horizontal = 32.dp
-                            )
+                        modifier = Modifier.padding(
+                            vertical = 16.dp,
+                            horizontal = 32.dp
+                        )
                     ) {
                         Spacer(modifier = Modifier.height(5.dp))
                         Text(
@@ -98,13 +92,14 @@ fun LoginScreen(navController: NavController, usuarioRepository: UsuarioReposito
                             textAlign = TextAlign.Center
                         )
 
-                        //Aqui esta sendo utilizado um metodo que cria um OutlinedTextField
+                        // Aqui está sendo utilizado um método que cria um OutlinedTextField
                         Spacer(modifier = Modifier.height(20.dp))
                         OutlinedTextField(
                             value = email,
                             onValueChange = {
                                 email = it
                                 borderColor = Color.Gray
+                                errorText = ""
                             },
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -123,7 +118,7 @@ fun LoginScreen(navController: NavController, usuarioRepository: UsuarioReposito
                         OutlinedTextField(
                             value = senha,
                             onValueChange = {
-                                if(it.length <= 6){
+                                if (it.length <= 6) {
                                     senha = it
                                 }
                                 borderColor = Color.Gray
@@ -136,13 +131,17 @@ fun LoginScreen(navController: NavController, usuarioRepository: UsuarioReposito
                                 unfocusedBorderColor = borderColor,
                                 focusedBorderColor = Color.Black
                             ),
-                            keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done, keyboardType = KeyboardType.Number),
+                            keyboardOptions = KeyboardOptions.Default.copy(
+                                imeAction = ImeAction.Done,
+                                keyboardType = KeyboardType.Number
+                            ),
                             visualTransformation = PasswordVisualTransformation(),
                             placeholder = {
                                 Text(text = "Senha")
                             }
                         )
-                        //Mostra uma mensagem de erro caso email ou senha seja incorreto
+
+                        // Mostra uma mensagem de erro caso email ou senha seja incorreto
                         Text(
                             text = errorText,
                             fontSize = 12.sp,
@@ -150,18 +149,17 @@ fun LoginScreen(navController: NavController, usuarioRepository: UsuarioReposito
                             modifier = Modifier.padding(top = 3.dp)
                         )
 
-                        //Botão que ir levar o usuario para a tela de cadastro
+                        // Botão que irá levar o usuário para a tela de cadastro
                         Row(
                             horizontalArrangement = Arrangement.Center,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                        ){
-                            Button(onClick = {
-                                navController.navigate("cadastro")
-                            },
-                                modifier = Modifier
-                                    .size(width = 126.dp, height = 31.dp),
-                                colors = ButtonDefaults.buttonColors(Color.White),
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Button(
+                                onClick = {
+                                    navController.navigate("cadastro")
+                                },
+                                modifier = Modifier.size(width = 126.dp, height = 31.dp),
+                                colors = ButtonDefaults.buttonColors(Color.White)
                             ) {
                                 Text(
                                     text = "Cadastrar-se",
@@ -171,17 +169,20 @@ fun LoginScreen(navController: NavController, usuarioRepository: UsuarioReposito
                             }
                         }
 
-                        //Botão que ir logar o usuario e levalo para a tela da utilização da API
+                        // Botão que irá logar o usuário e levá-lo para a tela da utilização da API
                         Spacer(modifier = Modifier.height(5.dp))
                         Button(
                             onClick = {
-                                if (usuarioRepository.validarCredenciais(email, senha)) {
-                                    navController.navigate("inbox")
-                                }else{
-                                    borderColor = Color.Red
-                                    errorText = "Email ou senha inválido"
+                                if (email.isNotBlank() && senha.isNotBlank()) {
+                                    if (usuarioRepository.validarCredenciais(email, senha)) {
+                                        navController.navigate("inbox")
+                                    } else {
+                                        borderColor = Color.Red
+                                        errorText = "Email ou senha inválido"
+                                    }
+                                } else {
+                                    errorText = "Preencha todos os campos"
                                 }
-                                navController.navigate("inbox")
                             },
                             modifier = Modifier
                                 .align(Alignment.CenterHorizontally)
@@ -189,8 +190,7 @@ fun LoginScreen(navController: NavController, usuarioRepository: UsuarioReposito
                                 .fillMaxWidth(),
                             shape = RoundedCornerShape(5.dp),
                             colors = ButtonDefaults.buttonColors(Color(0xFFD50D3D))
-                        )
-                        {
+                        ) {
                             Text(
                                 text = "ENTRAR",
                                 fontSize = 14.sp

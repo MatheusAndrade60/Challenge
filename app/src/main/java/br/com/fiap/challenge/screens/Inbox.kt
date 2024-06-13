@@ -1,9 +1,10 @@
 package br.com.fiap.challenge.screens
 
+import android.content.Context
+import android.content.Intent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -15,16 +16,18 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconToggleButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -36,33 +39,34 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.NavController
 import br.com.fiap.challenge.component.Header
 import br.com.fiap.challenge.database.repository.getEmailByName
 import br.com.fiap.challenge.model.Email
 
 @Composable
-fun InboxScreen(navController: NavController){
-    var stateEmail by remember {
-        mutableStateOf("")
-    }
-   var listEmailByName by remember {
-       mutableStateOf(getEmailByName(stateEmail))
-   }
+fun InboxScreen(navController: NavController, sortIconResId: Int) {
+    var stateEmail by remember { mutableStateOf("") }
+    var listEmailByName by remember { mutableStateOf(getEmailByName(stateEmail)) }
+    var selectedEmails by remember { mutableStateOf<LinkedHashSet<Email>>(linkedSetOf()) }
 
-    Column(modifier = Modifier
-        .padding(16.dp)
-        .fillMaxWidth()
-        .fillMaxHeight()
-    ){
+    // Adicione um estado para controlar se a lista está ordenada
+    var isSorted by remember { mutableStateOf(false) }
+
+    Column(
+        modifier = Modifier
+            .padding(16.dp)
+            .fillMaxWidth()
+            .fillMaxHeight()
+    ) {
         Text(
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally),
+            modifier = Modifier.align(Alignment.CenterHorizontally),
             text = "Minha Caixa de Entrada",
             fontSize = 24.sp,
             fontStyle = FontStyle.Italic,
@@ -92,8 +96,7 @@ fun InboxScreen(navController: NavController){
                     Text(text = "Filtre um e-mail")
                 },
                 trailingIcon = {
-                    IconButton(onClick = {})
-                    {
+                    IconButton(onClick = {}) {
                         Icon(
                             imageVector = Icons.Default.Search,
                             contentDescription = "icon-search"
@@ -103,89 +106,102 @@ fun InboxScreen(navController: NavController){
             )
 
             Spacer(modifier = Modifier.height(5.dp))
-            LazyColumn(
+
+            // Alinhe o botão à esquerda acima da lista
+            Column(
                 modifier = Modifier
-                    .padding(10.dp)
-                    .fillMaxHeight()
-                    .background(Color(0xFF535353))
+                    .padding(horizontal = 10.dp)
             ) {
-                items(listEmailByName) {
-                    SchoolCard(email = it)
+                IconButton(
+                    onClick = {
+                        isSorted = !isSorted
+                        if (isSorted) {
+                            listEmailByName = listEmailByName.sortedBy { it.remetente }
+                        } else {
+                            listEmailByName = getEmailByName(stateEmail)
+                        }
+                    },
+                    modifier = Modifier.align(Alignment.Start)
+                ) {
+                    Icon(
+                        painter = painterResource(id = sortIconResId),
+                        contentDescription = if (isSorted) "Desordenar" else "Ordenar"
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(5.dp))
+
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .background(Color(0xFF535353))
+                ) {
+                    items(listEmailByName) { email ->
+                        var isImportant by remember { mutableStateOf(false) }
+
+                        SchoolCard(
+                            email = email,
+                            isImportant = isImportant,
+                            onStarClicked = { isChecked ->
+                                isImportant = isChecked
+                            }
+                        )
+                    }
                 }
             }
         }
     }
 }
+
 @Composable
-fun SchoolCard(email: Email){
-    var checked by remember { mutableStateOf(false) }
+fun SchoolCard(email: Email, isImportant: Boolean, onStarClicked: (Boolean) -> Unit) {
+    val backgroundColor = if (isImportant) Color(0xFFF3E035) else Color(0xFF2C2C2C)
+    val textColor = if (isImportant) Color.Black else Color.White
+    val starColor = if (isImportant) Color.Black else Color.Gray
 
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color(0xFF2C2C2C))
+            .background(backgroundColor)
             .border(
-                border = BorderStroke(1.dp, Color.Gray), // Borda para todos os lados
-                shape = RectangleShape // Sem borda arredondada
+                border = BorderStroke(1.dp, Color.Gray),
+                shape = RectangleShape
             )
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .fillMaxWidth()
+            modifier = Modifier.fillMaxWidth()
         ) {
-            Checkbox(
-                checked = checked,
-                onCheckedChange = { checked = it },
-                colors = CheckboxDefaults.colors(
-                    checkmarkColor = Color.White,
-                    uncheckedColor = Color.Gray,
-                    checkedColor = Color.Gray
+            IconToggleButton(
+                checked = isImportant,
+                onCheckedChange = { isChecked ->
+                    onStarClicked(isChecked)
+                }
+            ) {
+                Icon(
+                    imageVector = if (isImportant) Icons.Filled.Star else Icons.Filled.Star,
+                    contentDescription = if (isImportant) "Desmarcar estrela" else "Marcar como importante",
+                    tint = starColor,
+                    modifier = Modifier.size(19.dp)
                 )
-            )
+            }
             Text(
                 text = email.remetente,
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.White
+                fontSize = 19.sp,
+                color = textColor
             )
             Spacer(modifier = Modifier.width(10.dp))
             Text(
                 text = email.titulo,
-                fontSize = 17.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.White
+                fontSize = 16.sp,
+                color = textColor
             )
         }
     }
 }
-//                Column(
-//                    modifier = Modifier
-//                        .weight(1f)
-//                        .fillMaxWidth()
-//                        .padding(end = 10.dp),
-//                    verticalArrangement = Arrangement.Center
-//                ){
-//                    Text(
-//                        modifier = Modifier
-//                            .align(Alignment.CenterHorizontally),
-//                        text = "Vagas",
-//                        fontSize = 16.sp,
-//                        fontWeight = FontWeight.Bold,
-//                    )
-//                    Text(
-//                        modifier = Modifier
-//                            .align(Alignment.CenterHorizontally),
-//                        text = email.quantidadeVagas.toString(),
-//                        fontSize = 20.sp,
-//                        fontWeight = FontWeight.Bold,
-//                        color = Color.Yellow
-//                    )
-//                }
 
-
-//@Preview(showBackground = true, showSystemUi = true)
+//@Preview
 //@Composable
-//fun InboxScreenView() {
+//private fun InboxScreenView() {
 //    InboxScreen()
 //}

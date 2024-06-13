@@ -45,7 +45,8 @@ class MainActivity : ComponentActivity() {
                             CadastroScreen(navController)
                         }
                         composable(route = "inbox") {
-                            InboxScreen(navController)
+                            val sortIconResId = R.drawable.icon
+                            InboxScreen(navController, sortIconResId)
                         }
                     }
                 }
