@@ -42,6 +42,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat.startActivity
@@ -67,7 +68,7 @@ fun InboxScreen(navController: NavController, sortIconResId: Int) {
     ) {
         Text(
             modifier = Modifier.align(Alignment.CenterHorizontally),
-            text = "Minha Caixa de Entrada",
+            text = "Caixa GoMail",
             fontSize = 24.sp,
             fontStyle = FontStyle.Italic,
             fontWeight = FontWeight.Bold,
@@ -83,35 +84,32 @@ fun InboxScreen(navController: NavController, sortIconResId: Int) {
         ) {
             Header()
 
-            OutlinedTextField(
-                value = stateEmail,
-                onValueChange = {
-                    stateEmail = it
-                    listEmailByName = getEmailByName(it)
-                },
+            Row(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(10.dp),
-                label = {
-                    Text(text = "Filtre um e-mail")
-                },
-                trailingIcon = {
-                    IconButton(onClick = {}) {
-                        Icon(
-                            imageVector = Icons.Default.Search,
-                            contentDescription = "icon-search"
-                        )
+                    .fillMaxWidth()) {
+                OutlinedTextField(
+                    value = stateEmail,
+                    onValueChange = {
+                        stateEmail = it
+                        listEmailByName = getEmailByName(it)
+                    },
+                    modifier = Modifier
+                        .width(304.dp)
+                        .height(82.dp)
+                        .padding(10.dp),
+                    label = {
+                        Text(text = "Filtre um e-mail")
+                    },
+                    trailingIcon = {
+                        IconButton(onClick = {}) {
+                            Icon(
+                                imageVector = Icons.Default.Search,
+                                contentDescription = "icon-search"
+                            )
+                        }
                     }
-                }
-            )
+                )
 
-            Spacer(modifier = Modifier.height(5.dp))
-
-            // Alinhe o botão à esquerda acima da lista
-            Column(
-                modifier = Modifier
-                    .padding(horizontal = 10.dp)
-            ) {
                 IconButton(
                     onClick = {
                         isSorted = !isSorted
@@ -121,20 +119,23 @@ fun InboxScreen(navController: NavController, sortIconResId: Int) {
                             listEmailByName = getEmailByName(stateEmail)
                         }
                     },
-                    modifier = Modifier.align(Alignment.Start)
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .padding(top = 7.dp),
                 ) {
                     Icon(
                         painter = painterResource(id = sortIconResId),
                         contentDescription = if (isSorted) "Desordenar" else "Ordenar"
                     )
                 }
+            }
 
-                Spacer(modifier = Modifier.height(5.dp))
-
+            Spacer(modifier = Modifier.height(5.dp))
+            Column(modifier = Modifier.padding(start = 10.dp, end = 10.dp)) {
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxHeight()
-                        .background(Color(0xFF535353))
+                        .background(Color(0xFF5C5858))
                 ) {
                     items(listEmailByName) { email ->
                         var isImportant by remember { mutableStateOf(false) }
@@ -155,7 +156,7 @@ fun InboxScreen(navController: NavController, sortIconResId: Int) {
 
 @Composable
 fun SchoolCard(email: Email, isImportant: Boolean, onStarClicked: (Boolean) -> Unit) {
-    val backgroundColor = if (isImportant) Color(0xFFF3E035) else Color(0xFF2C2C2C)
+    val backgroundColor = if (isImportant) Color(0xFFF3E035) else Color(0xFF413A3A)
     val textColor = if (isImportant) Color.Black else Color.White
     val starColor = if (isImportant) Color.Black else Color.Gray
 
@@ -187,13 +188,14 @@ fun SchoolCard(email: Email, isImportant: Boolean, onStarClicked: (Boolean) -> U
             }
             Text(
                 text = email.remetente,
-                fontSize = 19.sp,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold,
                 color = textColor
             )
             Spacer(modifier = Modifier.width(10.dp))
             Text(
                 text = email.titulo,
-                fontSize = 16.sp,
+                fontSize = 15.sp,
                 color = textColor
             )
         }

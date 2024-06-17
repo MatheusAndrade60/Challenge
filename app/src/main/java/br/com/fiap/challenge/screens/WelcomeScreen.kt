@@ -36,7 +36,7 @@ import br.com.fiap.challenge.component.Header
 fun WelcomeScreen(navController: NavController) {
     Box(modifier = Modifier.fillMaxWidth()) {
         Column(modifier = Modifier
-            .background(color = Color(0xFFD50D3D))
+            .background(color = Color(0xFFCBD9E6))
             .fillMaxWidth()
             .fillMaxHeight()
         ) {
@@ -62,7 +62,7 @@ fun WelcomeScreen(navController: NavController) {
                     )
                     ) {
                         Text(
-                            text = "Bem-vindo(a) a Locaweb",
+                            text = "Bem-vindo(a) a GoMail",
                             modifier = Modifier.fillMaxWidth(),
                             fontSize = 22.sp,
                             fontWeight = FontWeight.Bold,
@@ -76,10 +76,10 @@ fun WelcomeScreen(navController: NavController) {
                                 navController.navigate("login")
                             },
                             modifier = Modifier
-                                .size(width = 303.dp, height = 40.dp)
+                                .size(width = 230.dp, height = 40.dp)
                                 .align(Alignment.CenterHorizontally),
                             shape = RoundedCornerShape(5.dp),
-                            colors = ButtonDefaults.buttonColors(Color(0xFC243444))
+                            colors = ButtonDefaults.buttonColors(Color(0xFF289BC4))
                         )
                         {
                             Text(
@@ -93,7 +93,7 @@ fun WelcomeScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(180.dp))
 
             Image(
-                painter = painterResource(id = R.drawable.banner),
+                painter = painterResource(id = R.drawable.logo),
                 contentDescription = "Banner da Empresa",
                 modifier = Modifier.size(320.dp, 190.dp)
                     .align(Alignment.CenterHorizontally),

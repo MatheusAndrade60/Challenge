@@ -102,7 +102,7 @@ fun CadastroScreen(navController: NavController) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .fillMaxHeight()
-                        .background(Color.White),
+                        .background(color = Color(0xFFCBD9E6)),
                 ) {
                     //Card com o login do usuario
                     Column(
@@ -131,7 +131,7 @@ fun CadastroScreen(navController: NavController) {
                             ) {
                                 Spacer(modifier = Modifier.height(5.dp))
                                 Text(
-                                    text = "Cadastro Webmail",
+                                    text = "Cadastro GoMail",
                                     modifier = Modifier.fillMaxWidth(),
                                     fontSize = 18.sp,
                                     fontWeight = FontWeight.Bold,

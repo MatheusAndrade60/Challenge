@@ -44,7 +44,7 @@ import br.com.fiap.challenge.component.Header
 import br.com.fiap.challenge.database.repository.UsuarioRepository
 
 @Composable
-fun LoginScreen(navController: NavController, usuarioRepository: UsuarioRepository) {
+fun LoginScreen(navController: NavController, usuarioRepository: UsuarioRepository){
     var email by remember { mutableStateOf("") }
     var senha by remember { mutableStateOf("") }
     var borderColor by remember { mutableStateOf(Color.Gray) }
@@ -58,7 +58,7 @@ fun LoginScreen(navController: NavController, usuarioRepository: UsuarioReposito
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
-                .background(Color.White)
+                .background(color = Color(0xFFCBD9E6))
         ) {
             // Método que irá retornar um layout para o Header
             Header()
@@ -84,7 +84,7 @@ fun LoginScreen(navController: NavController, usuarioRepository: UsuarioReposito
                     ) {
                         Spacer(modifier = Modifier.height(5.dp))
                         Text(
-                            text = "Acesso ao Webmail",
+                            text = "Acesso ao GoMail",
                             modifier = Modifier.fillMaxWidth(),
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Bold,
