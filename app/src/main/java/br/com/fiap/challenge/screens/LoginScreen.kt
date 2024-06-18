@@ -173,16 +173,16 @@ fun LoginScreen(navController: NavController, usuarioRepository: UsuarioReposito
                         Spacer(modifier = Modifier.height(5.dp))
                         Button(
                             onClick = {
-                                if (email.isNotBlank() && senha.isNotBlank()) {
-                                    if (usuarioRepository.validarCredenciais(email, senha)) {
+//                                if (email.isNotBlank() && senha.isNotBlank()) {
+//                                    if (usuarioRepository.validarCredenciais(email, senha)) {
                                         navController.navigate("inbox")
-                                    } else {
-                                        borderColor = Color.Red
-                                        errorText = "Email ou senha inválido"
-                                    }
-                                } else {
-                                    errorText = "Preencha todos os campos"
-                                }
+//                                    } else {
+//                                        borderColor = Color.Red
+//                                        errorText = "Email ou senha inválido"
+//                                    }
+//                                } else {
+//                                    errorText = "Preencha todos os campos"
+//                                }
                             },
                             modifier = Modifier
                                 .align(Alignment.CenterHorizontally)
