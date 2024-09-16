@@ -4,6 +4,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import okhttp3.Request
+import okio.Timeout
 import br.com.fiap.challenge.model.Email
 
 
@@ -22,6 +23,8 @@ class MockCall<T>(private val response: Response<T>) : Call<T> {
     override fun cancel() {}
 
     override fun request(): Request = Request.Builder().build()
+
+    override fun timeout(): Timeout = Timeout.NONE
 
     override fun execute(): Response<T> = response
 }
