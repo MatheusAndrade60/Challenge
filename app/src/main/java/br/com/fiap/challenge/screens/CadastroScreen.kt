@@ -102,7 +102,6 @@ fun CadastroScreen(navController: NavController) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .fillMaxHeight()
-                        .background(color = Color(0xFFCBD9E6)),
                 ) {
                     //Card com o login do usuario
                     Column(

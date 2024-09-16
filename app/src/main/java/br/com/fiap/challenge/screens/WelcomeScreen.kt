@@ -33,10 +33,11 @@ import br.com.fiap.challenge.R
 import br.com.fiap.challenge.component.Header
 
 @Composable
-fun WelcomeScreen(navController: NavController) {
+fun WelcomeScreen(navController: NavController
+) {
     Box(modifier = Modifier.fillMaxWidth()) {
         Column(modifier = Modifier
-            .background(color = Color(0xFFCBD9E6))
+            .background(color = Color(0xFFF20D45))
             .fillMaxWidth()
             .fillMaxHeight()
         ) {
@@ -79,7 +80,7 @@ fun WelcomeScreen(navController: NavController) {
                                 .size(width = 230.dp, height = 40.dp)
                                 .align(Alignment.CenterHorizontally),
                             shape = RoundedCornerShape(5.dp),
-                            colors = ButtonDefaults.buttonColors(Color(0xFF289BC4))
+                            colors = ButtonDefaults.buttonColors(Color(0xFF2C343C))
                         )
                         {
                             Text(
@@ -93,7 +94,7 @@ fun WelcomeScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(180.dp))
 
             Image(
-                painter = painterResource(id = R.drawable.logo),
+                painter = painterResource(id = R.drawable.banner),
                 contentDescription = "Banner da Empresa",
                 modifier = Modifier.size(320.dp, 190.dp)
                     .align(Alignment.CenterHorizontally),

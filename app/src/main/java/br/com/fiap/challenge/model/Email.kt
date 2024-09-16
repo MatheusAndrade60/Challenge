@@ -7,7 +7,6 @@ import kotlin.time.TimeSource
 data class Email(
     @PrimaryKey(autoGenerate = true) val id: Int,
     var remetente: String="",
-    val titulo: String="",
     val assunto: String="",
     val endereco: String=""
 )

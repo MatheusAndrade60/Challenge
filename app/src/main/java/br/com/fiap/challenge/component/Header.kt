@@ -42,30 +42,29 @@ fun Header() {
         modifier = Modifier
             .fillMaxWidth()
             .height(120.dp)
-            .background(color = Color(0xFF289BC4)),
+            .background(color = Color(0xFF2C343C)),
         contentAlignment = Alignment.TopStart
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
-                .padding(top = 20.dp)
+                .padding(top = 10.dp)
         ) {
             Image(
-                painter = painterResource(id = R.drawable.logo), // Substitua 'logo' pelo nome da sua imagem
+                painter = painterResource(id = R.drawable.locaweb),
                 contentDescription = "Logo Da Empresa",
                 modifier = Modifier
-                    .size(270.dp,80.dp)
-                    .padding(start = 110.dp),
+                    .size(75.dp,55.dp),
                 contentScale = ContentScale.Crop,
             )
 
             Button(
                 onClick = { showDatePicker(context) },
                 modifier = Modifier
-                    .padding(top = 20.dp, start = 35.dp)
-                    .size(height = 43.dp, width = 70.dp),
-                colors = ButtonDefaults.buttonColors(Color(0xFC243444))
+                    .padding(top = 20.dp, start = 225.dp)
+                    .size(height = 53.dp, width = 80.dp),
+                colors = ButtonDefaults.buttonColors(Color(0xFF2C343C))
             ) {
                 Icon(
                     imageVector = Icons.Default.DateRange,

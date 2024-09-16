@@ -54,6 +54,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import br.com.fiap.challenge.R
+import br.com.fiap.challenge.component.Header
 import br.com.fiap.challenge.database.repository.getEmailByName
 import br.com.fiap.challenge.model.Email
 import java.util.Calendar
@@ -96,42 +97,7 @@ fun InboxScreen() {
                 .height(120.dp)
                 .background(color = Color(0xFF289BC4))
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 24.dp)
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.logo),
-                    contentDescription = "Logo Da Empresa",
-                    modifier = Modifier
-                        .size(125.dp, 70.dp),
-                    contentScale = ContentScale.Crop,
-                )
-
-                Text(
-                    modifier = Modifier
-                        .padding(start = 30.dp, top = 20.dp),
-                    text = "Caixa GoMail",
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White
-                )
-
-                Button(
-                    onClick = { showDatePicker(context) },
-                    modifier = Modifier
-                        .padding(top = 13.dp, start = 40.dp)
-                        .size(height = 43.dp, width = 70.dp),
-                    colors = ButtonDefaults.buttonColors(Color(0xFC243444))
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.DateRange,
-                        contentDescription = "Ícone de Calendário",
-                        modifier = Modifier.size(23.dp)
-                    )
-                }
-            }
+            Header()
         }
 
         Column(
@@ -190,9 +156,9 @@ fun InboxScreen() {
                                 }
                             },
                             modifier = Modifier
-                                .padding(top = 23.dp, start = 18.dp)
+                                .padding(top = 23.dp, start = 3.dp, end = 15.dp)
                                 .size(width = 73.dp, height = 45.dp),
-                            colors = ButtonDefaults.buttonColors(Color(0xFC243444))
+                            colors = ButtonDefaults.buttonColors(Color(0xFF2C343C))
                         ) {
                             Icon(
                                 imageVector = Icons.Default.List,
@@ -206,7 +172,7 @@ fun InboxScreen() {
 
                     // Contador de linhas
                     Text(
-                        text = "Total de Entradas: ${listEmailByName.size}",
+                        text = "E-mails: ${listEmailByName.size}",
                         modifier = Modifier.padding(start = 16.dp, top = 8.dp),
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold
@@ -303,6 +269,7 @@ fun SchoolCard(
     onStarClicked: (Boolean) -> Unit,
     onButtonClicked: () -> Unit
 ) {
+    var stateEmail by remember { mutableStateOf(email.remetente) }
     val backgroundColor = if (isImportant) Color(0xFFF3E035) else Color(0xFF413A3A)
     val textColor = if (isImportant) Color.Black else Color.White
     val starColor = if (isImportant) Color.Black else Color.Gray
@@ -349,7 +316,7 @@ fun SchoolCard(
             Spacer(modifier = Modifier.width(2.dp))
             Text(
                 modifier = Modifier.padding(bottom = 20.dp),
-                text = email.titulo,
+                text = email.assunto,
                 fontSize = 15.sp,
                 color = textColor
             )

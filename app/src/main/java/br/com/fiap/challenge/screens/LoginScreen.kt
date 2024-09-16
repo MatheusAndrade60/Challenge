@@ -58,7 +58,6 @@ fun LoginScreen(navController: NavController, usuarioRepository: UsuarioReposito
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
-                .background(color = Color(0xFFCBD9E6))
         ) {
             // Método que irá retornar um layout para o Header
             Header()
@@ -84,7 +83,7 @@ fun LoginScreen(navController: NavController, usuarioRepository: UsuarioReposito
                     ) {
                         Spacer(modifier = Modifier.height(5.dp))
                         Text(
-                            text = "Acesso ao GoMail",
+                            text = "Acesso ao LocaWeb",
                             modifier = Modifier.fillMaxWidth(),
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Bold,
@@ -173,16 +172,16 @@ fun LoginScreen(navController: NavController, usuarioRepository: UsuarioReposito
                         Spacer(modifier = Modifier.height(5.dp))
                         Button(
                             onClick = {
-//                                if (email.isNotBlank() && senha.isNotBlank()) {
-//                                    if (usuarioRepository.validarCredenciais(email, senha)) {
+                                if (email.isNotBlank() && senha.isNotBlank()) {
+                                    if (usuarioRepository.validarCredenciais(email, senha)) {
                                         navController.navigate("inbox")
-//                                    } else {
-//                                        borderColor = Color.Red
-//                                        errorText = "Email ou senha inválido"
-//                                    }
-//                                } else {
-//                                    errorText = "Preencha todos os campos"
-//                                }
+                                    } else {
+                                        borderColor = Color.Red
+                                        errorText = "Email ou senha inválido"
+                                    }
+                                } else {
+                                    errorText = "Preencha todos os campos"
+                                }
                             },
                             modifier = Modifier
                                 .align(Alignment.CenterHorizontally)
