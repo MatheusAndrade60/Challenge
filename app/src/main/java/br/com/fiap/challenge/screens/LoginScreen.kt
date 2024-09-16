@@ -61,7 +61,7 @@ fun LoginScreen(navController: NavController, usuarioRepository: UsuarioReposito
                 .background(color = Color(0xFFCBD9E6))
         ) {
             // Método que irá retornar um layout para o Header
-            Header()
+            Header(navController = navController)
 
             // Card com o login do usuário
             Column(

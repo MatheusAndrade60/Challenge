@@ -1,3 +1,4 @@
+// Header.kt
 package br.com.fiap.challenge.component
 
 import android.app.DatePickerDialog
@@ -15,13 +16,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.ui.AbsoluteAlignment
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -30,13 +31,15 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import br.com.fiap.challenge.R
 import java.util.Calendar
 
 val DarkGray = Color(0xFC243444)
 
 @Composable
-fun Header() {
+fun Header(navController: NavController) {
     val context = LocalContext.current
     Box(
         modifier = Modifier
@@ -51,25 +54,46 @@ fun Header() {
                 .fillMaxHeight()
                 .padding(top = 20.dp)
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.logo), // Substitua 'logo' pelo nome da sua imagem
-                contentDescription = "Logo Da Empresa",
-                modifier = Modifier
-                    .size(270.dp,80.dp)
-                    .padding(start = 110.dp),
-                contentScale = ContentScale.Crop,
-            )
-
+            // Ícone de calendário à esquerda
             Button(
                 onClick = { showDatePicker(context) },
                 modifier = Modifier
-                    .padding(top = 20.dp, start = 35.dp)
+                    .padding(top = 20.dp, start = 16.dp)
                     .size(height = 43.dp, width = 70.dp),
                 colors = ButtonDefaults.buttonColors(Color(0xFC243444))
             ) {
                 Icon(
                     imageVector = Icons.Default.DateRange,
                     contentDescription = "Ícone de Calendário",
+                    modifier = Modifier.size(23.dp)
+                )
+            }
+
+            Spacer(modifier = Modifier.weight(1f)) // Para empurrar o ícone da engrenagem para a direita
+
+            // Logo centralizada
+            Image(
+                painter = painterResource(id = R.drawable.logo), // Substitua 'logo' pelo nome da sua imagem
+                contentDescription = "Logo Da Empresa",
+                modifier = Modifier
+                    .size(180.dp, 80.dp)
+                    .padding(start = 16.dp),
+                contentScale = ContentScale.Crop,
+            )
+
+            Spacer(modifier = Modifier.weight(1f)) // Para empurrar o ícone de configurações para a direita
+
+            // Ícone de configurações à direita
+            Button(
+                onClick = { navController.navigate("config") }, // Navega para a tela Config
+                modifier = Modifier
+                    .padding(top = 20.dp, end = 16.dp)
+                    .size(height = 43.dp, width = 70.dp),
+                colors = ButtonDefaults.buttonColors(Color(0xFC243444))
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Settings,
+                    contentDescription = "Ícone de Configurações",
                     modifier = Modifier.size(23.dp)
                 )
             }
@@ -97,5 +121,7 @@ private fun showDatePicker(context: android.content.Context) {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun HeaderPreview() {
-    Header()
+    // Para pré-visualizar, você pode passar um NavController fictício ou usar um mock.
+    // Para simplificação, o navController é omitido aqui.
+    Header(navController = rememberNavController())
 }

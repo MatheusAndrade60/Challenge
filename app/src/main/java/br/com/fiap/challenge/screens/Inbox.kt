@@ -53,13 +53,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import br.com.fiap.challenge.R
 import br.com.fiap.challenge.database.repository.getEmailByName
 import br.com.fiap.challenge.model.Email
 import java.util.Calendar
 
 @Composable
-fun InboxScreen() {
+fun InboxScreen(navController: NavController) {
     var stateEmail by remember { mutableStateOf("") }
     var listEmailByName by remember { mutableStateOf(getEmailByName(stateEmail)) }
     var selectedEmails by remember { mutableStateOf<LinkedHashSet<Email>>(linkedSetOf()) }
@@ -370,5 +372,6 @@ fun SchoolCard(
 @Preview
 @Composable
 private fun InboxScreenView() {
-    InboxScreen()
+    val navController = rememberNavController() // Criar um NavController simulado
+    InboxScreen(navController = navController) // Passar o NavController simulado
 }

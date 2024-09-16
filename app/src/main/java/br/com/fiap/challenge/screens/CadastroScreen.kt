@@ -46,6 +46,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import br.com.fiap.challenge.database.repository.UsuarioRepository
 import br.com.fiap.challenge.model.Endereco
 import br.com.fiap.challenge.model.Usuario
@@ -95,7 +96,7 @@ fun CadastroScreen(navController: NavController) {
         ) {
             item {
                 //Medoto que ira retornar um layout para o Header
-                Header()
+                Header(navController = navController)
             }
             item() {
                 Column(
@@ -407,8 +408,9 @@ fun CadastroScreen(navController: NavController) {
     }
 }
 
-//@Preview(showSystemUi = true, showBackground = true)
-//@Composable
-//private fun Preview() {
-//    CadastroScreen()
-//}
+@Preview(showSystemUi = true, showBackground = true)
+@Composable
+private fun Preview() {
+    val navController = rememberNavController() // Criar um NavController simulado
+    CadastroScreen(navController = navController) // Passar o NavController simulado
+}

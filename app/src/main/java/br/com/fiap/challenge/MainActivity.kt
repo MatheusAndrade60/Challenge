@@ -1,5 +1,4 @@
 package br.com.fiap.challenge
-
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -10,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import ConfigScreen
 import br.com.fiap.challenge.database.repository.UsuarioRepository
 import br.com.fiap.challenge.screens.CadastroScreen
 import br.com.fiap.challenge.screens.InboxScreen
@@ -45,8 +45,10 @@ class MainActivity : ComponentActivity() {
                             CadastroScreen(navController)
                         }
                         composable(route = "inbox") {
-                            InboxScreen(//navController
-                            )
+                            InboxScreen(navController)
+                        }
+                        composable(route = "config") {
+                            ConfigScreen(navController) // Adiciona a tela ConfigScreen
                         }
                     }
                 }
