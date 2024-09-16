@@ -72,6 +72,9 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0")
     implementation("androidx.core:core-ktx:1.8.0")
+    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.4.0")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0")
+    implementation ("com.squareup.okhttp3:okhttp:4.9.3")
 
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")

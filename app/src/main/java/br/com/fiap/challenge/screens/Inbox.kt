@@ -57,6 +57,8 @@ import br.com.fiap.challenge.R
 import br.com.fiap.challenge.component.Header
 import br.com.fiap.challenge.database.repository.getEmailByName
 import br.com.fiap.challenge.model.Email
+import br.com.fiap.challenge.service.EmailService
+import br.com.fiap.challenge.service.RetrofitFactory
 import java.util.Calendar
 
 @Composable
@@ -69,6 +71,8 @@ fun InboxScreen() {
     var dialogText by remember { mutableStateOf("") }
     var dialogPlaceholder by remember { mutableStateOf("") }
     var currentEmailIndex by remember { mutableStateOf(-1) }
+    val retrofitFactory = RetrofitFactory()
+    val emailService = retrofitFactory.getEmailService()
 
     fun showDatePicker(context: android.content.Context) {
         val calendar = Calendar.getInstance()
