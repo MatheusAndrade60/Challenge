@@ -7,8 +7,6 @@ import okhttp3.Request
 import okio.Timeout
 import br.com.fiap.challenge.model.Email
 
-
-// Uma classe simples para criar uma resposta mockada
 class MockCall<T>(private val response: Response<T>) : Call<T> {
     override fun enqueue(callback: Callback<T>) {
         callback.onResponse(this, response)
@@ -31,8 +29,8 @@ class MockCall<T>(private val response: Response<T>) : Call<T> {
 
 class MockEmailApiService : EmailApiService {
     private val emails = mutableListOf(
-        Email(1, "Gmail", "Account Activation", "google.com.br"),
-        Email(2, "Amazon", "Order Shipped", "amazon.com.br")
+        Email(1, "Gmail", "Ativação de conta", "google.com.br"),
+        Email(2, "Amazon", "Pedido enviado",  "amazon.com.br")
     )
 
     override fun getEmails(): Call<List<Email>> {

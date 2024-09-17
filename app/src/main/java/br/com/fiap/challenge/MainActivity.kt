@@ -46,8 +46,7 @@ class MainActivity : ComponentActivity() {
                             CadastroScreen(navController)
                         }
                         composable(route = "inbox") {
-                            InboxScreen(//navController
-                            )
+                            InboxScreen()
                         }
                     }
                 }

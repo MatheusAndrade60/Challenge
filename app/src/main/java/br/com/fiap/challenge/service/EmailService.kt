@@ -14,7 +14,7 @@ class EmailService {
 
     private val emailHistory = mutableListOf<EmailSent>()
     private val userEmailCounts = ConcurrentHashMap<String, MutableList<Long>>()
-    private val emailRateLimit = 50 // e-mails permitidos por período
+    private val emailRateLimit = 35 // e-mails permitidos por período
     private val timeWindowMillis = 3600000 // 1 hora em milissegundos
 
     // Função para verificar se o comportamento é de spam
