@@ -12,6 +12,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import br.com.fiap.challenge.database.repository.UsuarioRepository
 import br.com.fiap.challenge.screens.CadastroScreen
+import br.com.fiap.challenge.screens.ConfigScreen
 import br.com.fiap.challenge.screens.InboxScreen
 import br.com.fiap.challenge.screens.LoginScreen
 import br.com.fiap.challenge.ui.theme.ChallengeTheme
@@ -36,14 +37,16 @@ class MainActivity : ComponentActivity() {
                     val navController = rememberNavController()
                     NavHost(navController = navController, startDestination = "welcome") {
                         composable(route = "welcome") {
-                            WelcomeScreen(navController
-                            )
+                            WelcomeScreen(navController)
                         }
                         composable(route = "login") {
                             LoginScreen(navController, usuarioRepository)
                         }
                         composable(route = "cadastro") {
                             CadastroScreen(navController)
+                        }
+                        composable(route = "config"){
+                            ConfigScreen(navController)
                         }
                         composable(route = "inbox") {
                             InboxScreen()

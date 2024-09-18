@@ -190,6 +190,7 @@ fun saveUserPreferences(
     // Lógica para salvar as preferências (SharedPreferences, banco de dados, etc.)
 }
 
+
 @Composable
 fun PreviewNavController(): NavController {
     return rememberNavController()

@@ -6,7 +6,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -20,13 +19,9 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.compose.ui.AbsoluteAlignment
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -38,13 +33,11 @@ import br.com.fiap.challenge.R
 import br.com.fiap.challenge.ui.theme.LocalThemeColors
 import java.util.Calendar
 
-val DarkGray = Color(0xFF2C343C)
-
 @Composable
 fun Header(navController: NavController) {
 
     val context = LocalContext.current
-    val themeColors = LocalThemeColors.current // Obter as cores atuais
+    val themeColors = LocalThemeColors.current
 
     Box(
         modifier = Modifier
@@ -59,42 +52,37 @@ fun Header(navController: NavController) {
                 .fillMaxHeight()
                 .padding(top = 20.dp)
         ) {
-
-            // Ícone de calendário à esquerda
             Button(
-                onClick = { showDatePicker(context) },
+                onClick = { navController.navigate("config") },
                 modifier = Modifier
                     .padding(top = 20.dp, start = 16.dp)
                     .size(height = 43.dp, width = 70.dp),
                 colors = ButtonDefaults.buttonColors(themeColors.surface)
-
             ) {
                 Icon(
                     imageVector = Icons.Default.DateRange,
                     contentDescription = "Ícone de Calendário",
-                    tint = themeColors.primary, // Usar cor do texto do tema
+                    tint = themeColors.primary,
                     modifier = Modifier.size(23.dp)
                 )
             }
 
-            Spacer(modifier = Modifier.weight(1f)) // Para empurrar o ícone da engrenagem para a direita
+            Spacer(modifier = Modifier.weight(1f))
 
-            // Logo centralizada
             Image(
-                painter = painterResource(id = R.drawable.locaweb), // Substitua 'logo' pelo nome da sua imagem
+                painter = painterResource(id = R.drawable.locaweb),
                 contentDescription = "Logo Da Empresa",
                 modifier = Modifier
-                    .size(150.dp,90.dp)
+                    .size(150.dp, 90.dp)
                     .padding(start = 16.dp)
-                    .clickable { navController.navigateUp() }, // Volta para a página anterior
-                contentScale = ContentScale.Crop,
+                    .clickable { navController.navigateUp() },
+                contentScale = ContentScale.Crop
             )
 
-            Spacer(modifier = Modifier.weight(1f)) // Para empurrar o ícone de configurações para a direita
+            Spacer(modifier = Modifier.weight(1f))
 
-            // Ícone de configurações à direita
             Button(
-                onClick = { navController.navigate("config") }, // Navega para a tela Config
+                onClick = { navController.navigate("config") },
                 modifier = Modifier
                     .padding(top = 20.dp, end = 16.dp)
                     .size(height = 43.dp, width = 70.dp),
@@ -103,13 +91,14 @@ fun Header(navController: NavController) {
                 Icon(
                     imageVector = Icons.Default.Settings,
                     contentDescription = "Ícone de Configurações",
-                    tint = themeColors.primary, // Usar cor do texto do tema
+                    tint = themeColors.primary,
                     modifier = Modifier.size(23.dp)
                 )
             }
         }
     }
 }
+
 
 
 private fun showDatePicker(context: android.content.Context) {
