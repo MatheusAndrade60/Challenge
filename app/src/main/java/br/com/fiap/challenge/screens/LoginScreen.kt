@@ -40,6 +40,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import br.com.fiap.challenge.component.Header
 import br.com.fiap.challenge.database.repository.UsuarioRepository
 
@@ -60,7 +61,7 @@ fun LoginScreen(navController: NavController, usuarioRepository: UsuarioReposito
                 .fillMaxHeight()
         ) {
             // Método que irá retornar um layout para o Header
-            Header()
+            Header(navController = rememberNavController())
 
             // Card com o login do usuário
             Column(
@@ -205,5 +206,5 @@ fun LoginScreen(navController: NavController, usuarioRepository: UsuarioReposito
 //@Preview(showSystemUi = true, showBackground = true)
 //@Composable
 //private fun LoginScreenPreview() {
-//    LoginScreen()
+//    LoginScreen(navController = rememberNavController(),)
 //}
