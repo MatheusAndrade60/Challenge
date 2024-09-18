@@ -1,10 +1,10 @@
-// Header.kt
 package br.com.fiap.challenge.component
 
 import android.app.DatePickerDialog
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -34,6 +34,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import br.com.fiap.challenge.R
+import br.com.fiap.challenge.ui.theme.LocalThemeColors
+import br.com.fiap.challenge.ui.theme.ThemeColors
 import java.util.Calendar
 
 val DarkGray = Color(0xFC243444)
@@ -41,11 +43,13 @@ val DarkGray = Color(0xFC243444)
 @Composable
 fun Header(navController: NavController) {
     val context = LocalContext.current
+    val themeColors = LocalThemeColors.current // Obter as cores atuais
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .height(120.dp)
-            .background(color = Color(0xFF289BC4)),
+            .background(themeColors.primary),
         contentAlignment = Alignment.TopStart
     ) {
         Row(
@@ -60,11 +64,12 @@ fun Header(navController: NavController) {
                 modifier = Modifier
                     .padding(top = 20.dp, start = 16.dp)
                     .size(height = 43.dp, width = 70.dp),
-                colors = ButtonDefaults.buttonColors(Color(0xFC243444))
+                colors = ButtonDefaults.buttonColors(themeColors.surface)
             ) {
                 Icon(
                     imageVector = Icons.Default.DateRange,
                     contentDescription = "Ícone de Calendário",
+                    tint = themeColors.primary, // Usar cor do texto do tema
                     modifier = Modifier.size(23.dp)
                 )
             }
@@ -77,7 +82,8 @@ fun Header(navController: NavController) {
                 contentDescription = "Logo Da Empresa",
                 modifier = Modifier
                     .size(180.dp, 80.dp)
-                    .padding(start = 16.dp),
+                    .padding(start = 16.dp)
+                    .clickable { navController.navigateUp() }, // Volta para a página anterior
                 contentScale = ContentScale.Crop,
             )
 
@@ -89,11 +95,12 @@ fun Header(navController: NavController) {
                 modifier = Modifier
                     .padding(top = 20.dp, end = 16.dp)
                     .size(height = 43.dp, width = 70.dp),
-                colors = ButtonDefaults.buttonColors(Color(0xFC243444))
+                colors = ButtonDefaults.buttonColors(themeColors.surface)
             ) {
                 Icon(
                     imageVector = Icons.Default.Settings,
                     contentDescription = "Ícone de Configurações",
+                    tint = themeColors.primary, // Usar cor do texto do tema
                     modifier = Modifier.size(23.dp)
                 )
             }
@@ -121,7 +128,5 @@ private fun showDatePicker(context: android.content.Context) {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun HeaderPreview() {
-    // Para pré-visualizar, você pode passar um NavController fictício ou usar um mock.
-    // Para simplificação, o navController é omitido aqui.
     Header(navController = rememberNavController())
 }
