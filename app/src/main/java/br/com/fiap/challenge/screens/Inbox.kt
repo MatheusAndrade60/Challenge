@@ -1,6 +1,7 @@
 package br.com.fiap.challenge.screens
 
 import android.app.DatePickerDialog
+import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -53,16 +54,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import br.com.fiap.challenge.R
 import br.com.fiap.challenge.component.Header
 import br.com.fiap.challenge.database.repository.getEmailByName
 import br.com.fiap.challenge.model.Email
 import br.com.fiap.challenge.service.EmailService
 import br.com.fiap.challenge.service.RetrofitFactory
+import br.com.fiap.challenge.ui.theme.LocalThemeColors
 import java.util.Calendar
 
 @Composable
-fun InboxScreen() {
+fun InboxScreen(navController: NavController) {
     var stateEmail by remember { mutableStateOf("") }
     var listEmailByName by remember { mutableStateOf(getEmailByName(stateEmail)) }
     var selectedEmails by remember { mutableStateOf<LinkedHashSet<Email>>(linkedSetOf()) }
@@ -73,6 +77,8 @@ fun InboxScreen() {
     var currentEmailIndex by remember { mutableStateOf(-1) }
     val retrofitFactory = RetrofitFactory()
     val emailService = retrofitFactory.getEmailService()
+    val themeColors = LocalThemeColors.current
+
 
     fun showDatePicker(context: android.content.Context) {
         val calendar = Calendar.getInstance()
@@ -101,7 +107,7 @@ fun InboxScreen() {
                 .height(120.dp)
                 .background(color = Color(0xFF289BC4))
         ) {
-            Header()
+            Header(navController = navController)
         }
 
         Column(
@@ -341,5 +347,5 @@ fun SchoolCard(
 @Preview
 @Composable
 private fun InboxScreenView() {
-    InboxScreen()
+    InboxScreen(navController = rememberNavController())
 }

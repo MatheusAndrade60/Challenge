@@ -95,7 +95,7 @@ fun CadastroScreen(navController: NavController) {
         ) {
             item {
                 //Medoto que ira retornar um layout para o Header
-                Header()
+                Header(navController = navController)
             }
             item() {
                 Column(

@@ -42,7 +42,7 @@ fun WelcomeScreen(navController: NavController
             .fillMaxHeight()
         ) {
             //Medoto que ira retornar um layout para o Header
-            Header()
+            Header(navController = navController)
 
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,

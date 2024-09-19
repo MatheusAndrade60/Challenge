@@ -60,7 +60,7 @@ fun LoginScreen(navController: NavController, usuarioRepository: UsuarioReposito
                 .fillMaxHeight()
         ) {
             // Método que irá retornar um layout para o Header
-            Header()
+            Header(navController = navController)
 
             // Card com o login do usuário
             Column(

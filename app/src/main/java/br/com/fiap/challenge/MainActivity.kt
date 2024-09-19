@@ -14,6 +14,7 @@ import br.com.fiap.challenge.database.repository.UsuarioRepository
 import br.com.fiap.challenge.screens.CadastroScreen
 import br.com.fiap.challenge.screens.InboxScreen
 import br.com.fiap.challenge.screens.LoginScreen
+import br.com.fiap.challenge.screens.ConfigScreen
 import br.com.fiap.challenge.ui.theme.ChallengeTheme
 import br.com.fiap.challenge.screens.WelcomeScreen
 
@@ -46,7 +47,10 @@ class MainActivity : ComponentActivity() {
                             CadastroScreen(navController)
                         }
                         composable(route = "inbox") {
-                            InboxScreen()
+                            InboxScreen(navController)
+                        }
+                        composable(route = "config") {
+                            ConfigScreen(navController)
                         }
                     }
                 }
